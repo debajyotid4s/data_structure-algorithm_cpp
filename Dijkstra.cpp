@@ -1,76 +1,70 @@
 #include<bits/stdc++.h>
+#define N 1000
 using namespace std;
 
-void singleSourceShortestPath(int m, int w[100][100]) {
-    int touch[100];       
-    int length[100];      
-    bool visited[100];    
+void SSSP(int m, int path_matrix[1000][1000]){
+    int temp[N];
+    int length[N];
 
-    for (int i = 1; i <= m; i++) {
-        if (w[1][i] != 100) {
-            length[i] = w[1][i];  
-        } else {
-            length[i] = INT_MAX; 
+    for(int i = 0; i < m; i++){
+        if(path_matrix[0][i] != 100) {
+            length[i] = path_matrix[0][i];
         }
-        touch[i] = 1;           
-        visited[i] = false;     
+        else length[i] = INT_MAX;
+        temp[i] = 0;
     }
 
-    length[1] = 0;  
-    visited[1] = true; 
+    length[0] = 0;
 
     int count = 0;
 
-    while (count < m - 1) {
+    while(count != m - 1) {
         int min = INT_MAX;
-        int vnear = -1;
+        int vn = -1;
 
-        for (int i = 1; i <= m; i++) {
-            if (!visited[i] && length[i] < min) {
+        for(int i = 0; i < m; i++){
+            if((0 <= length[i]) && length[i] < min){
                 min = length[i];
-                vnear = i;
+                vn = i;
             }
         }
 
-        if (vnear == -1) break;
+        if(vn == -1) break;
 
-        visited[vnear] = true; 
 
-        for (int i = 1; i <= m; i++) {
-            if (!visited[i] && w[vnear][i] != 100 && length[vnear] != INT_MAX) {
-                int newLength = length[vnear] + w[vnear][i];
-                if (newLength < length[i]) {
-                    length[i] = newLength;
-                    touch[i] = vnear;
+        for(int i = 0; i < m; i++){
+            if((length[vn] + path_matrix[vn][i]) < length[i]){
+                int Length = length[vn] + path_matrix[vn][i];
+                if(Length < length[i]){
+                    length[i] = Length;
+                    temp[i] = vn;
                 }
             }
         }
-
         count++;
     }
 
-    for (int i = 2; i <= m; i++) {
-        if (length[i] == INT_MAX) {
-            cout << i << "\tINF\n";
-        } else {
-            cout << i << "\t" << length[i] << "\n";
+    for(int i = 1; i < m; i++){
+        if(length[i] == INT_MAX){
+            cout << i << " no way\n";
+        }
+        else {
+            cout << i << ' ' << length[i] << '\n';
         }
     }
 }
 
-int main() {
+int main(){
     int m;
-    int w[100][100];
-
     cin >> m;
+    int path_matrix[1000][1000];
 
-    for (int i = 1; i <= m; i++) {
-        for (int j = 1; j <= m; j++) {
-            cin >> w[i][j];
+    for(int i = 0; i < m; i++){
+        for(int j = 0; j < m; j++){
+            cin >> path_matrix[i][j];
         }
     }
 
-    singleSourceShortestPath(m, w);
-
+    SSSP(m, path_matrix);
     return 0;
 }
