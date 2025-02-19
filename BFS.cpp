@@ -61,3 +61,19 @@ int32_t main() {
     cin >> source;
     BFS(G, source);
 }
+
+
+/*
+10
+v r
+r s
+s w
+w x
+w t
+x y
+x t
+x u
+t u
+u y
+s
+*/
