@@ -1,7 +1,8 @@
 # algorithm_cpp
 Essential algorithms using c++.
 
-#sublime--cpp--build#
+#sublime--cpp--build# -> windows
+
 
 
 {
