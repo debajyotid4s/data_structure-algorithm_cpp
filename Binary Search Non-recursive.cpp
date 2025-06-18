@@ -15,13 +15,11 @@ int Bin_Search(int a[], int low, int high, int x){
 
 int32_t main(){
   	fast();
-  	int n; cin >> n;
-  	int a[n];
-  	for(int i = 0; i < n; i++) cin >> a[i];
-
-  	int x; cin >> x;
+  	int n, x; cin >> n >> x;
+  	int a[n + 1];
+  	for(int i = 1; i <= n; i++) cin >> a[i];
   
-  	int result = Bin_Search(a, 0, n - 1, x);
+  	int result = Bin_Search(a, 1, n, x);
 	if(result == -1) cout << "X not Found" <<'\n';
-	else cout << "X found at position " << result + 1 <<'\n';
+	else cout << "X found at position " << result <<'\n';
 }
