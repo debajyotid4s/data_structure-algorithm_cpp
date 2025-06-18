@@ -1,37 +1,53 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
+
+#define INF 1000000
+#define N 100
+
+void AllPairsShortestPath(int cost[N][N], int A[N][N], int n) {
+    
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            A[i][j] = cost[i][j];
+        }
+    }
+    for (int k = 1; k <= n; k++) {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (A[i][k] < INF && A[k][j] < INF)
+                    A[i][j] = min(A[i][j], A[i][k] + A[k][j]);
+            }
+        }
+    }
+}
 
 int main() {
     int n;
     cin >> n;
-    vector<vector<int>> cost(n, vector<int>(n));
-    vector<vector<int>> a(n, vector<int>(n));
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
+
+    int cost[N][N], A[N][N];
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
             cin >> cost[i][j];
+            if (i == j)
+                cost[i][j] = 0;
+            else if (cost[i][j] == 100)
+                cost[i][j] = INF;
         }
     }
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            a[i][j] = cost[i][j];
-        }
-    }
+    AllPairsShortestPath(cost, A, n);
 
-    
-    for (int k = 0; k < n; k++) { 
-        for (int i = 0; i < n; i++) { 
-            for (int j = 0; j < n; j++) { 
-                a[i][j] = min(a[i][j], a[i][k] + a[k][j]);
-            }
+    cout << "All-pairs shortest path matrix:\n";
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (A[i][j] == INF)
+                cout << "INF ";
+            else
+                cout << A[i][j] << " ";
         }
-    }
-
-    for(int i = 0; i < n; i++){
-    	for(int j = 0; j < n; j++){
-    		cout << a[i][j] <<' ';
-    	}
-    	cout << '\n';
+        cout << "\n";
     }
 
     return 0;
